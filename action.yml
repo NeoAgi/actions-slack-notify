@@ -1,9 +1,6 @@
 name: "Setup AWS CodeArtifact"
 description: "Sets up the dotnet build environment to use AWS CodeArtifact"
 inputs:
-  slack-webook-url:  
-    description: 'URL of Slack Webhook to Post to'
-    required: true
   action-message:
     description: 'Custom Message to include'
     required: true
@@ -12,13 +9,11 @@ runs:
   using: "composite"
 
   steps: 
-  # Add the 3.1 SDK, needed to install the AWS Code Artifact Credential Provider
+  # Call the action provider
   - name: Invoke Slack Action
     uses: act10ns/slack@v1
     with:
       status: ${{ job.status }}
       channel: '#build-events'
       message: ${{ inputs.action-message }}
-    env:
-      SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
     if: always()
