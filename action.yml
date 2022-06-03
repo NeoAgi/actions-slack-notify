@@ -4,6 +4,10 @@ inputs:
   action-message:
     description: 'Custom Message to include'
     required: true
+  action-status:
+    description: "Custom status to display"
+    required: false
+    default: ${{ job.status }}
 
 runs:
   using: "composite"
@@ -13,7 +17,7 @@ runs:
   - name: Invoke Slack Action
     uses: act10ns/slack@v1
     with:
-      status: ${{ job.status }}
+      status: ${{ inputs.action-status }}
       channel: '#build-events'
       message: ${{ inputs.action-message }}
     if: always()
